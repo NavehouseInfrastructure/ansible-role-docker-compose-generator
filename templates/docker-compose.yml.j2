@@ -4,7 +4,21 @@ services:
 {% for container in containers %}
 {% if container.active %}
   {{ container.service_name }}:
+{% if container.build is defined %}
+{% if container.build is string %}
+    build: {{ container.build }}
+{% else %}
+    build:
+{% if container.build.context is defined %}
+      context: {{ container.build.context }}
+{% endif %}
+{% if container.build.dockerfile is defined %}
+      dockerfile: {{ container.build.dockerfile }}
+{% endif %}
+{% endif %}
+{% else %}
     image: {{ container.image }}
+{% endif %}
     container_name: {{ container.container_name | default(container.service_name) }}
 {% if container.extra_hosts is defined %}
     extra_hosts:
@@ -14,9 +28,6 @@ services:
 {% endif %}
 {% if container.network_mode is defined %}
     network_mode: {{ container.network_mode }}
-{% endif %}
-{% if container.build is defined %}
-    build: {{ container.build }}
 {% endif %}
 {% if container.privileged is defined %}
     privileged: {{ container.privileged }}

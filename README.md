@@ -80,6 +80,21 @@ containers:
     mem_limit: 128m
     ports:
       - "4242:4242"
+  - service_name: custom-app
+    active: true
+    build: ./app
+    container_name: custom-app
+    volumes:
+      - "{{ appdata_path }}/custom-app:{{ container_data_path }}"
+    restart: "{{ unless_stopped }}"
+  - service_name: advanced-app
+    active: true
+    build:
+      context: ./src
+      dockerfile: Dockerfile.prod
+    container_name: advanced-app
+    ports:
+      - "8080:8080"
 
 compose_networks:
   - name: proxy
