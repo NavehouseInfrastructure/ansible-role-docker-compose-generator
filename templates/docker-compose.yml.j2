@@ -244,6 +244,9 @@ networks:
 {% if network.network_name is defined %}
     name: {{ network.network_name }}
 {% endif %}
+{% if network.enable_ipv6 is defined %}
+    enable_ipv6: {{ network.enable_ipv6 }}
+{% endif %}
 {% endfor %}
 {% endif %}
 
