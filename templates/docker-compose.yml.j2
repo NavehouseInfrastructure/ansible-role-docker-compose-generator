@@ -129,6 +129,16 @@ services:
 {% if container.mem_limit is defined %}
     mem_limit: {{ container.mem_limit }}
 {% endif %}
+{% if container.entrypoint is defined %}
+{% if container.entrypoint is string %}
+    entrypoint: {{ container.entrypoint }}
+{% else %}
+    entrypoint:
+{% for entry in container.entrypoint %}
+      - {{ entry }}
+{% endfor %}
+{% endif %}
+{% endif %}
 {% if container.single_command is defined %}
     command: {{ container.single_command }}
 {% endif %}
