@@ -38,6 +38,9 @@ services:
 {% if container.privileged is defined %}
     privileged: {{ container.privileged }}
 {% endif %}
+{% if container.init is defined %}
+    init: {{ container.init | bool | lower }}
+{% endif %}
 {% if container.ipc is defined %}
     ipc: {{ container.ipc }}
 {% endif %}
